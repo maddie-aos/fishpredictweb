@@ -1,0 +1,138 @@
+body {
+  background-image: url('matt-hardy-unsplash.jpg');
+  background-size: cover;
+  background-color: #161857;
+  margin: 0; /* Reset default margin to remove extra spacing */
+  font-family: Arial, sans-serif; /* Apply default font family to the whole body */
+}
+
+h1 {
+  font-size: 2.5em;
+  color: #161857;
+  align-items: center;
+  text-align: center; /* Center-align the text */
+}
+
+p {
+  font-size: 1.2em;
+  color: #161857;
+  text-align: center; /* Center-align the text */
+}
+
+button, .grey-button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #161857;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.grey-button:hover {
+  background-color: #2d2d5a;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+button:hover {
+  background-color: #1d2082;
+}
+
+input {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+.centered-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid #161857;
+  padding: 10px;
+  text-align: left;
+}
+
+.coordinates {
+  font-size: 16px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.footer-content img {
+  max-width: 50%;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0; /* Remove default padding for the ul */
+}
+
+.nav-link {
+  color: #161857;
+  text-decoration: none;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+}
+
+.nav-link:after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  transition: width 0.3s;
+}
+
+.nav-link:hover:after {
+  width: 100%;
+}
+
+.image-container {
+  text-align: center;
+  margin-top: 20px; /* Adjust the margin-top as needed */
+}
+
+.image-container img {
+  max-width: 50%;
+  height: auto;
+}

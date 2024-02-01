@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albacore Tuna</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <h1 align="center">Enter Latitude and Longitude Data</h1>
+    
+    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
+        <div id="input" style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
+            <form action="/thu_ala_pred" method="post" class="info">
+                <input type="text" name="latitudechange" placeholder="32.555">
+                <input type="text" name="longitudechange" placeholder="-118.004">
+        </div>
+    </div> 
+    
+    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
+        <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
+            <form action="/thu_ala_pred" method="post" class="info">
+                <button class="submit">Predict</button>
+            </form>
+        </div>
+    </div> 
+
+    <!-- Add the button to route back to the home page and select a different species -->
+    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
+        <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
+            <a href="{{ url_for('index') }}">
+                <button class="submit">Back to Home</button>
+            </a>
+            <a href="{{ url_for('predict') }}">
+                <button class="submit">Select a Different Species</button>
+            </a>
+        </div>
+    </div> 
+    
+    <div class="centered-box">
+        <p class="coordinates">Sample Ocean Coordinates: 32.555, -118.004</p>
+        <p class="coordinates">Sample Land Coordinates: 24.748, 39.807</p>
+        <p class="coordinates">Sample Invalid Coordinates: 99.660, -189.004</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Madeline Smith. All rights reserved.</p>
+    </footer>
+</body>
+</html>

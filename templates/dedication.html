@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="page-container">
+
+        <h1 align="center">For Papa</h1>
+        <!-- Display the image using pure HTML -->
+        <div class="image-container">
+          <img src="static_files/papa_fishing.jpg" alt="Papa Fishing" />
+          <p>
+            Thanks for teaching me how to love the ocean, hope you're catching all the tuna up in Heaven!
+          </p>
+        </div>
+
+        <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
+          <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
+              <a href="{{ url_for('index') }}">
+                  <button class="submit">Back to Home</button>
+              </a>
+          </div>
+
+        <footer>
+          <div class="footer-content">
+            <p>&copy; 2024 Madeline Smith. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+</body>
+</html>
