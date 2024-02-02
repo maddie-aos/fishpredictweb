@@ -96,7 +96,7 @@ def predict_csor():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('stacked_bio_oracle/env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -207,7 +207,7 @@ def predict_emor():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('stacked_bio_oracle/env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
