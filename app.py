@@ -15,6 +15,9 @@ import folium
 import pickle
 
 STATIC_DIR = os.path.abspath('./static_files')
+#aws_s3_bucket_name = os.environ.get('AWS_S3_BUCKET_NAME')
+#tif_file_key = 'bio_oracle_stacked.tif'
+#s3_url = f'https://fishpredictbucket.s3.amazonaws.com/bio_oracle_stacked.tif'
 
 #instantiating app 
 app = Flask(__name__, static_folder=STATIC_DIR)
