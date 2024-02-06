@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 #stacked_bio_oracle/
+results/fish
