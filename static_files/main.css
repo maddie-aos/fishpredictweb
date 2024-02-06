@@ -1,8 +1,8 @@
 body {
-  background-image: url('matt-hardy-unsplash.jpg');
+  /*background-image: url('matt-hardy-unsplash.jpg');*/
   background-size: cover;
-  background-color: #161857;
-  margin: 0; /* Reset default margin to remove extra spacing */
+  background-color: #FDF1EC;
+  margin: 0; 
   font-family: Arial, sans-serif; /* Apply default font family to the whole body */
 }
 
@@ -83,6 +83,7 @@ footer {
   padding: 10px;
   font-size: 12px;
   text-align: center;
+  font-weight: normal;
 }
 
 .footer-content {
