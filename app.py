@@ -69,10 +69,19 @@ def cit_sor_pred():
 @app.route("/cit_sor_pred", methods = ['POST'])
 def predict_csor():
     #taking in user input, making a dataframe
-    lat = request.form.get('latitudechange')
-    latitude = float(lat)
-    lon = request.form.get('longitudechange')
-    longitude = float(lon)
+
+    lat_str = request.form.get('latitudechange')
+    lon_str = request.form.get('longitudechange')
+
+    if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
+        return render_template('csor_invalid.html', message='Please provide valid latitude and longitude.')
+    
+    try:
+        latitude = float(lat_str)
+        longitude = float(lon_str)
+    except (ValueError, TypeError):
+        return render_template('csor_invalid.html', message='Invalid latitude or longitude format.')
+
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
 
@@ -162,12 +171,8 @@ def predict_csor():
             vals = str(val)
 
             result = "Likeliood of presence: " + vals + "%"
+            return render_template('csor_map.html', latitude=latitude, longitude=longitude, result=result)
 
-            map = folium.Map(location=[latitude, longitude],zoom_start=8, tooltip = 'This tooltip will appear on hover')
-            folium.Marker(location=[latitude,longitude], tooltip=result).add_to(map)
-            map.save(outfile='templates/csor_map.html')
-            return render_template('csor_map.html')
-            #return map._repr_html_()
 
         else: 
             return render_template('csor_land_coord.html')

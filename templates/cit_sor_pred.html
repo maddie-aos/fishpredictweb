@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,48 +7,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pacific Sanddab</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <!-- Include Leaflet CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
     <h1 align="center">Enter Latitude and Longitude Data</h1>
     
     <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
         <div id="input" style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-            <form action="/cit_sor_pred" method="post" class="info">
-                <input type="text" name="latitudechange" placeholder="32.555">
-                <input type="text" name="longitudechange" placeholder="-118.004">
-        </div>
-    </div> 
-    
-    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
-        <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-            <form action="/cit_sor_pred" method="post" class="info">
-                <button class="submit">Predict</button>
+            <form id="citsor" action="/cit_sor_pred" method="post" class="info">
+                <!-- Update input fields with id attributes -->
+                <input type="text" id="latitudechange" name="latitudechange" placeholder="32.555">
+                <input type="text" id="longitudechange" name="longitudechange" placeholder="-118.004">
             </form>
         </div>
     </div> 
-    
-    <!-- Add the button to route back to the home page -->
-   
+        
+    <!-- Add the map container -->
+    <div id="map" style="height: 400px;"></div>
 
-    <div class="centered-box">
-        <p class="coordinates">Sample Ocean Coordinates: 32.555, -118.004</p>
-        <p class="coordinates">Sample Land Coordinates: 24.748, 39.807</p>
-        <p class="coordinates">Sample Invalid Coordinates: 99.660, -189.004</p>
-    </div>
 
     <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
-      <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-          <a href="{{ url_for('index') }}">
-              <button class="submit">Back to Home</button>
-          </a>
-          <a href="{{ url_for('predict') }}">
-            <button class="submit">Select a Different Species</button>
-        </a>
-      </div>
-  </div> 
+        <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
+            <a href="{{ url_for('index') }}">
+                <button class="submit">Back to Home</button>
+            </a>
+            <a href="{{ url_for('predict') }}">
+                <button class="submit">Select a Different Species</button>
+            </a>
+        </div>
+    </div> 
     
     <footer>
         <p>&copy; 2024 Madeline Smith. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript for Leaflet integration -->
+    <script>
+        var map = L.map('map').setView([0, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marker = L.marker([0, 0], { draggable: true }).addTo(map);
+
+        function updateCoordinates(latlng) {
+            var latitudeString = latlng.lat.toFixed(6);
+            var longitudeString = latlng.lng.toFixed(6);
+
+            document.getElementById('latitudechange').value = latitudeString;
+            document.getElementById('longitudechange').value = longitudeString;
+
+            var latitudeNumber = parseFloat(latitudeString);
+            var longitudeNumber = parseFloat(longitudeString);
+            
+            document.getElementById('citsor').submit(); 
+        }
+
+
+        marker.on('dragend', function (event) {
+            updateCoordinates(marker.getLatLng());
+        });
+
+        updateCoordinates(marker.getLatLng());
+    </script>
 </body>
 </html>
+
