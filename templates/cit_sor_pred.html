@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +26,12 @@
     <!-- Add the map container -->
     <div id="map" style="height: 400px;"></div>
 
+    <!-- Add a button to trigger submission -->
+    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
+        <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
+            <button id="submitBtn" class="submit">Submit</button>
+        </div>
+    </div>
 
     <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
         <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
@@ -63,16 +68,18 @@
             var latitudeNumber = parseFloat(latitudeString);
             var longitudeNumber = parseFloat(longitudeString);
             
-            document.getElementById('citsor').submit(); 
+            // Uncomment the next line if you want to submit automatically
+            // document.getElementById('citsor').submit(); 
         }
-
 
         marker.on('click', function (event) {
             updateCoordinates(marker.getLatLng());
         });
 
-        updateCoordinates(marker.getLatLng());
+        // Use a button click to trigger submission
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('citsor').submit();
+        });
     </script>
 </body>
 </html>
-
