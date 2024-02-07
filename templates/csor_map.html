@@ -30,6 +30,7 @@
         </a>
     </div>
 
+
     <script>
         // Create a Leaflet map centered at the provided latitude and longitude
         var map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 4); // Adjusted zoom level
@@ -43,5 +44,6 @@
         L.marker([{{latitude}}, {{longitude}}]).addTo(map)
             .bindTooltip("{{ result }}", { permanent: true }).openTooltip();
     </script>
+    
 </body>
 </html>

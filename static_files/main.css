@@ -1,9 +1,35 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
-  /*background-image: url('matt-hardy-unsplash.jpg');*/
-  background-size: cover;
-  background-color: #FDF1EC;
-  margin: 0; 
-  font-family: Arial, sans-serif; /* Apply default font family to the whole body */
+  background: linear-gradient(-45deg, #0E79B2, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.page-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
@@ -76,14 +102,11 @@ input {
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   padding: 10px;
   font-size: 12px;
   text-align: center;
   font-weight: normal;
+
 }
 
 .footer-content {
@@ -91,7 +114,6 @@ footer {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  text-align: center;
 }
 
 .footer-content img {

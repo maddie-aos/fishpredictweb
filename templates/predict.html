@@ -5,36 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
-  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
-    <h1 align = "center">Select Species<h1/>
+    <div class="page-container">
+        <h1 align="center">Select Species</h1>
+        
         <div class="button" style="display: block; margin-bottom: 0; margin-right: 20px;">
             <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-              <a href=cit_sor><button class=grey>Pacific Sanddab (Citharichthys sordidus)</button></a>
-              <a href=eng_mor><button class=grey>Northern Anchovy (Engraulis mordax)</button></a>
-              <a href=par_cal><button class=grey>California Halibut (Paralichthys californicus)</button></a>
+                <a href=cit_sor><button class=grey>Pacific Sanddab (Citharichthys sordidus)</button></a>
+                <a href=eng_mor><button class=grey>Northern Anchovy (Engraulis mordax)</button></a>
+                <a href=par_cal><button class=grey>California Halibut (Paralichthys californicus)</button></a>
             </div>
         </div>
+        
         <div class="button" style="display: block; margin-bottom: 0; margin-right: 20px;">
             <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-              <a href=sco_jap><button class=grey>Chub Mackerel (Scomber japonicus)</button></a>
-              <a href=thu_ala><button class=grey>Albacore Tuna (Thunnus alalunga)</button></a>
-              <a href=xip_gla><button class=grey>Pacific Swordfish (Xiphias gladius)</button></a>
+                <a href=sco_jap><button class=grey>Chub Mackerel (Scomber japonicus)</button></a>
+                <a href=thu_ala><button class=grey>Albacore Tuna (Thunnus alalunga)</button></a>
+                <a href=xip_gla><button class=grey>Pacific Swordfish (Xiphias gladius)</button></a>
             </div>
-          </div>
+        </div>
 
-          <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
+        <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
             <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
                 <a href="{{ url_for('index') }}">
                     <button class="submit">Back to Home</button>
                 </a>
             </div>
         </div>
-        <footer>
-          <div class="footer-content">
-              <p>&copy; 2024 Madeline Smith. All rights reserved.</p>
-          </div>
-      </footer>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Madeline Smith.All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
