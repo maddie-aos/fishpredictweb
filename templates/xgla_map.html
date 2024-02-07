@@ -5,16 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaflet Map</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <!-- Include Leaflet CSS and JavaScript -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-    <div id="map" style="height: 100vh;"></div>
+
+    <h1>Prediction Location</h1>
+
+    <div class="centered-box">
+        <div id="map" style="height: 400px; width: 600px;"></div>
+    </div>
+
+    <div class="button-container">
+        <a href="{{ url_for('index') }}">
+            <button class="submit">Back to Home</button>
+        </a>
+        <a href="{{ url_for('predict') }}">
+            <button class="submit">Select a Different Species</button>
+        </a>
+        <a href="{{ url_for('xip_gla_pred') }}">
+            <button class="submit">Make a New Prediction</button>
+        </a>
+    </div>
 
     <script>
         // Create a Leaflet map centered at the provided latitude and longitude
-        var map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 8);
+        var map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 4); // Adjusted zoom level
 
         // Add a tile layer from OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
