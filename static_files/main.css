@@ -7,7 +7,7 @@ body {
   background: linear-gradient(-45deg, #0E79B2, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -156,7 +156,7 @@ ul {
 }
 
 .image-container img {
-  max-width: 40%;
+  max-width: 100%;
   height: auto;
 }
 
@@ -164,9 +164,47 @@ ul {
   max-width: 450px; /* Adjust the max-width as needed */
   margin-left: auto;
   margin-right: auto;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.137);
   border: 1px solid #161857;
   padding: 10px;
   text-align: left;
   margin-top: 20px; /* Adjust the margin-top as needed */
+}
+.slideshow-container {
+  position: relative;
+  max-width: 100%; /* Adjust the max-width as needed */
+  margin: auto;
+}
+
+.fade {
+  display: none;
+  animation: fade 1.5s ease-in-out;
+}
+
+@keyframes fade {
+  from {
+      opacity: .4
+  }
+  to {
+      opacity: 1
+  }
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -30px;
+  padding: 32px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.next {
+  right: 0;
+}
+
+.prev:hover, .next:hover {
+  background-color:rgba(255, 255, 255, 0.137);
 }
