@@ -6,47 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <style>
-        /* Add these styles for the slideshow */
-        .slideshow-container {
-            position: relative;
-            max-width: 40%; /* Adjust the max-width as needed */
-            margin: auto;
-        }
-
-        .fade {
-            display: none;
-            animation: fade 1.5s ease-in-out;
-        }
-
-        @keyframes fade {
-            from {
-                opacity: .4
-            }
-            to {
-                opacity: 1
-            }
-        }
-
-        .prev, .next {
-            position: absolute;
-            top: 50%;
-            width: auto;
-            margin-top: -30px;
-            padding: 16px;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .next {
-            right: 0;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-    </style>
+    
 </head>
 <body>
     <div class="page-container">
@@ -73,12 +33,10 @@
             <div class="image-container fade">
               <img src="static_files/papa_oregon.jpg" alt="Papa Oregon" />
             </div>
-
-           
-            <!-- Navigation arrows -->
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            
         </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
         <div class="dedication-box">
             <p>Thanks for teaching me how to love the ocean.</p> 

@@ -172,7 +172,7 @@ ul {
 }
 .slideshow-container {
   position: relative;
-  max-width: 100%; /* Adjust the max-width as needed */
+  max-width: 40%; /* Adjust the max-width as needed */
   margin: auto;
 }
 
@@ -194,17 +194,29 @@ ul {
   position: absolute;
   top: 50%;
   width: auto;
-  margin-top: -30px;
-  padding: 32px;
+  padding: 352px;
+  margin: 0;
   color: white;
-  font-size: 20px;
+  font-size: 28px;
   cursor: pointer;
+  background-color: transparent;
+  transform: translateY(-57.5%);
 }
 
 .next {
   right: 0;
 }
 
+/* Remove hover effect on buttons */
 .prev:hover, .next:hover {
-  background-color:rgba(255, 255, 255, 0.137);
+  background-color: transparent;
+}
+
+/* Adjust positioning if needed */
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
 }
