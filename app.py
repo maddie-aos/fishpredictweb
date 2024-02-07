@@ -68,19 +68,18 @@ def cit_sor_pred():
 
 @app.route("/cit_sor_pred", methods = ['POST'])
 def predict_csor():
-    #taking in user input, making a dataframe
 
     lat_str = request.form.get('latitudechange')
     lon_str = request.form.get('longitudechange')
 
     if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
-        return render_template('csor_invalid.html', message='Please provide valid latitude and longitude.')
+        return render_template('csor_invalid.html')
     
     try:
         latitude = float(lat_str)
         longitude = float(lon_str)
     except (ValueError, TypeError):
-        return render_template('csor_invalid.html', message='Invalid latitude or longitude format.')
+        return render_template('csor_invalid.html')
 
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
@@ -185,10 +184,19 @@ def eng_mor_pred():
 
 @app.route("/eng_mor_pred", methods = ['POST'])
 def predict_emor():
-    lat = request.form.get('latitudechange')
-    latitude = float(lat)
-    lon = request.form.get('longitudechange')
-    longitude = float(lon)
+    lat_str = request.form.get('latitudechange')
+    lon_str = request.form.get('longitudechange')
+
+    if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
+        return render_template('emor_invalid.html')
+    
+    try:
+        latitude = float(lat_str)
+        longitude = float(lon_str)
+    except (ValueError, TypeError):
+        return render_template('csor_invalid.html')
+
+
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
 
@@ -277,13 +285,9 @@ def predict_emor():
             vals = str(val)
 
             result = "Likeliood of presence: " + vals + "%"
+            return render_template('emor_map.html', latitude=latitude, longitude=longitude, result=result)
 
-            map = folium.Map(location=[latitude, longitude],zoom_start=8, tooltip = 'This tooltip will appear on hover')
-            folium.Marker(location=[latitude,longitude], tooltip=result).add_to(map)
-            map.save(outfile='templates/emor_map.html')
-
-            return render_template('emor_map.html')
-            #return map._repr_html_()
+           
         
 
 
@@ -298,10 +302,19 @@ def par_cal_pred():
 
 @app.route("/par_cal_pred", methods = ['POST'])
 def predict_pcal():
-    lat = request.form.get('latitudechange')
-    latitude = float(lat)
-    lon = request.form.get('longitudechange')
-    longitude = float(lon)
+    lat_str = request.form.get('latitudechange')
+    lon_str = request.form.get('longitudechange')
+
+    if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
+        return render_template('pcal_invalid.html')
+    
+    try:
+        latitude = float(lat_str)
+        longitude = float(lon_str)
+    except (ValueError, TypeError):
+        return render_template('pcal_invalid.html')
+
+
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
 
@@ -392,11 +405,7 @@ def predict_pcal():
 
             result = "Likeliood of presence: " + vals + "%"
 
-            map = folium.Map(location=[latitude, longitude],zoom_start=8, tooltip = 'This tooltip will appear on hover')
-            folium.Marker(location=[latitude,longitude], tooltip=result).add_to(map)
-            map.save(outfile='templates/pcal_map.html')
-
-            return render_template('pcal_map.html')
+            return render_template('csor_map.html', latitude=latitude, longitude=longitude, result=result)
 
             #return map._repr_html_()
         else: 
@@ -410,10 +419,20 @@ def sco_jap_pred():
 
 @app.route("/sco_jap_pred", methods = ['POST'])
 def predict_sjap():
-    lat = request.form.get('latitudechange')
-    latitude = float(lat)
-    lon = request.form.get('longitudechange')
-    longitude = float(lon)
+
+    lat_str = request.form.get('latitudechange')
+    lon_str = request.form.get('longitudechange')
+
+    if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
+        return render_template('sjap_invalid.html')
+    
+    try:
+        latitude = float(lat_str)
+        longitude = float(lon_str)
+    except (ValueError, TypeError):
+        return render_template('sjap_invalid.html')
+
+
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
 
@@ -503,15 +522,9 @@ def predict_sjap():
             vals = str(val)
 
             result = "Likeliood of presence: " + vals + "%"
+            return render_template('sjap_map.html', latitude=latitude, longitude=longitude, result=result)
 
-            map = folium.Map(location=[latitude, longitude],zoom_start=8, tooltip = 'This tooltip will appear on hover')
-            folium.Marker(location=[latitude,longitude], tooltip=result).add_to(map)
-            map.save(outfile='templates/sjap_map.html')
-
-            return render_template('sjap_map.html')
-
-
-            #return map._repr_html_()
+            
 
         else: 
             return render_template('sjap_land_coord.html')
@@ -524,10 +537,20 @@ def thu_ala_pred():
 
 @app.route("/thu_ala_pred", methods = ['POST'])
 def predict_tala():
-    lat = request.form.get('latitudechange')
-    latitude = float(lat)
-    lon = request.form.get('longitudechange')
-    longitude = float(lon)
+
+    lat_str = request.form.get('latitudechange')
+    lon_str = request.form.get('longitudechange')
+
+    if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
+        return render_template('tala_invalid.html')
+    
+    try:
+        latitude = float(lat_str)
+        longitude = float(lon_str)
+    except (ValueError, TypeError):
+        return render_template('tala_invalid.html')
+
+
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
 
@@ -617,15 +640,9 @@ def predict_tala():
             vals = str(val)
 
             result = "Likeliood of presence: " + vals + "%"
+            return render_template('tala_map.html', latitude=latitude, longitude=longitude, result=result)
 
-            map = folium.Map(location=[latitude, longitude],zoom_start=8, tooltip = 'This tooltip will appear on hover')
-            folium.Marker(location=[latitude,longitude], tooltip=result).add_to(map)
-            map.save(outfile='templates/tala_map.html')
-
-            return render_template('tala_map.html')
-
-
-            #return map._repr_html_()
+            
 
         else: 
             return render_template('tala_land_coord.html')
@@ -637,11 +654,21 @@ def xip_gla_pred():
     return render_template("xip_gla_pred.html")
 
 @app.route("/xip_gla_pred", methods = ['POST'])
-def predict_xgla(): 
-    lat = request.form.get('latitudechange')
-    latitude = float(lat)
-    lon = request.form.get('longitudechange')
-    longitude = float(lon)
+def predict_xgla():
+
+    lat_str = request.form.get('latitudechange')
+    lon_str = request.form.get('longitudechange')
+
+    if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
+        return render_template('xgla_invalid.html')
+    
+    try:
+        latitude = float(lat_str)
+        longitude = float(lon_str)
+    except (ValueError, TypeError):
+        return render_template('xgla_invalid.html')
+    
+
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
 
@@ -732,14 +759,9 @@ def predict_xgla():
             vals = str(val)
 
             result = "Likeliood of presence: " + vals + "%"
+            return render_template('xgla_map.html', latitude=latitude, longitude=longitude, result=result)
 
-            map = folium.Map(location=[latitude, longitude],zoom_start=8, tooltip = 'This tooltip will appear on hover')
-            folium.Marker(location=[latitude,longitude], tooltip=result).add_to(map)
-            map.save(outfile='templates/xgla_map.html')
-
-            return render_template('xgla_map.html')
-            #return map._repr_html_()
-
+            
         else: 
             return render_template('xgla_land_coord.html')
     else:
