@@ -181,7 +181,7 @@ ul {
 
 .slideshow-container {
   position: relative;
-  max-width: 700px; /* Adjust as needed */
+  max-width: 600px; /* Adjust as needed */
   margin: auto;
   overflow: hidden;
 }
