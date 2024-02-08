@@ -205,3 +205,8 @@ ul {
       opacity: 1
   }
 }
+
+#map {
+  margin: auto;
+  display: block;
+}
