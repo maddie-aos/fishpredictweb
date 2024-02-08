@@ -15,7 +15,7 @@
     
     <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
         <div id="input" style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-            <form id="scojap" action="/sco_jap_pred" method="post" class="info">
+            <form id="thuala" action="/thu_ala_pred" method="post" class="info">
                 <!-- Update input fields with id attributes -->
                 <input type="text" id="latitudechange" name="latitudechange" placeholder="32.555">
                 <input type="text" id="longitudechange" name="longitudechange" placeholder="-118.004">
@@ -26,6 +26,7 @@
     <!-- Add the map container -->
     <div id="map" style="height: 400px;"></div>
 
+    <!-- Add a button to trigger submission -->
     <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
         <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
             <button id="submitBtn" class="submit">Submit</button>
@@ -67,19 +68,18 @@
             var latitudeNumber = parseFloat(latitudeString);
             var longitudeNumber = parseFloat(longitudeString);
             
-            document.getElementById('scojap').submit(); 
+            // Uncomment the next line if you want to submit automatically
+            // document.getElementById('citsor').submit(); 
         }
-
-        // Use a button click to trigger submission
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            document.getElementById('scojap').submit();
-        });
 
         marker.on('click', function (event) {
             updateCoordinates(marker.getLatLng());
         });
 
-        updateCoordinates(marker.getLatLng());
+        // Use a button click to trigger submission
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('thuala').submit();
+        });
     </script>
 </body>
 </html>

@@ -14,29 +14,28 @@
         <h1 align="center">For Papa</h1>
 
         <div class="slideshow-container">
-            <div class="image-container fade">
-                <img src="static_files/papa_fishing.jpg" alt="Papa Fishing" />
+            <div class="image-container fade show">
+                <img src="static_files/papa_fishing.jpg" alt="Papa Fishing"/>
             </div>
            
-            <div class="image-container fade">
-                <img src="static_files/papa_beach.jpg" alt="Papa Beach" />
+            <div class="image-container fade show">
+                <img src="static_files/papa_beach.jpg" alt="Papa Beach"/>
             </div>
             
-            <div class="image-container fade">
-              <img src="static_files/papa_catalina.jpg" alt="Papa Catalina" />
+            <div class="image-container fade show">
+              <img src="static_files/papa_catalina.jpg" alt="Papa Catalina"/>
             </div>
             
-            <div class="image-container fade">
-              <img src="static_files/papa_ocean.jpg" alt="Papa Ocean" />
+            <div class="image-container fade show">
+              <img src="static_files/papa_ocean.jpg" alt="Papa Ocean"/>
             </div>
 
-            <div class="image-container fade">
-              <img src="static_files/papa_oregon.jpg" alt="Papa Oregon" />
+            <div class="image-container fade show">
+              <img src="static_files/papa_oregon.jpg" alt="Papa Oregon"/>
             </div>
             
         </div>
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+       
 
         <div class="dedication-box">
             <p>Thanks for teaching me how to love the ocean.</p> 
@@ -58,32 +57,28 @@
         </footer>
 
         <script>
-            let slideIndex = 1;
-
-            function showSlides(n) {
+            let slideIndex = 0; // Start with the first image
+        
+            function showSlides() {
                 let i;
                 let slides = document.getElementsByClassName("fade");
-                if (n > slides.length) {
-                    slideIndex = 1;
-                }
-                if (n < 1) {
-                    slideIndex = slides.length;
-                }
                 for (i = 0; i < slides.length; i++) {
                     slides[i].style.display = "none";
                 }
+                slideIndex++;
+                if (slideIndex > slides.length) {
+                    slideIndex = 1; // Reset to the first image
+                }
                 slides[slideIndex - 1].style.display = "block";
             }
-
-            function plusSlides(n) {
-                showSlides(slideIndex += n);
-            }
-
+        
             // Display the first image when the page loads
             document.addEventListener("DOMContentLoaded", function () {
-                showSlides(slideIndex);
+                showSlides();
+                setInterval(showSlides, 7000); 
             });
         </script>
+        
     </div>
 </body>
 </html>

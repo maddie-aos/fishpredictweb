@@ -69,19 +69,17 @@
             var longitudeNumber = parseFloat(longitudeString);
             
             // Uncomment the next line if you want to submit automatically
-            // document.getElementById('parcal').submit(); 
+            // document.getElementById('citsor').submit(); 
         }
-
-        // Use a button click to trigger submission
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            document.getElementById('parcal').submit();
-        });
 
         marker.on('click', function (event) {
             updateCoordinates(marker.getLatLng());
         });
 
-        updateCoordinates(marker.getLatLng());
+        // Use a button click to trigger submission
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('parcal').submit();
+        });
     </script>
 </body>
 </html>
