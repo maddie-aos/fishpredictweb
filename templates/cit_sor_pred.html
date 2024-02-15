@@ -62,8 +62,15 @@
             id: 'mapbox/satellite-v9', // Mapbox Satellite style
         }).addTo(map);
 
+        var customIcon = L.icon({
+            iconUrl: 'static_files/mapmark.png', // Replace with the path to your custom marker image
+            iconSize: [32, 32], // Adjust the size of the icon
+            iconAnchor: [16, 32], // Adjust the anchor point
+            popupAnchor: [0, -32] // Adjust the popup anchor
+        });
 
-        var marker = L.marker([0, 0], { draggable: true }).addTo(map);
+
+        var marker = L.marker([0, 0], { draggable: true, icon: customIcon }).addTo(map);
 
         function updateCoordinates(latlng) {
             var latitudeString = latlng.lat.toFixed(6);
