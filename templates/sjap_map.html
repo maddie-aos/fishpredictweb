@@ -32,16 +32,26 @@
 
     <script>
         // Create a Leaflet map centered at the provided latitude and longitude
-        var map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 4); // Adjusted zoom level
+        var map = L.map('map', {
+            center: [{{ latitude }}, {{ longitude }}],
+            zoom: 2,
+            crs: L.CRS.EPSG4326 // Use EPSG 4326 projection
+        });
 
         // Add a tile layer from OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFkZGllLW1hb3MiLCJhIjoiY2xzbm1qYXR5MDV3ZTJocDV6aGw0MmdpOSJ9.ALa64EAmdZbIBBJ06XpfEQ', {
+            attribution: '&copy; OpenStreetMap contributors',
+            id: 'mapbox/satellite-v9', // Mapbox Satellite style
         }).addTo(map);
 
         // Add a marker at the provided latitude and longitude with a tooltip
         L.marker([{{latitude}}, {{longitude}}]).addTo(map)
             .bindTooltip("{{ result }}", { permanent: true }).openTooltip();
+
+        var imageUrl = 'static_files/physical-world-map-1.jpg'; 
+        var imageBounds = [[-90, -180], [90, 180]];  // Replace with the bounds of your image
+        L.imageOverlay(imageUrl, imageBounds, { crs: L.CRS.EPSG4326 }).addTo(map);
+        
     </script>
 </body>
 </html>
