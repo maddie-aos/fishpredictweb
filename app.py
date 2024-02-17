@@ -785,6 +785,127 @@ def predict_xgla():
 
 
 
+@app.route("/cor_hip")
+def cor_hip_pred():
+    return render_template("cor_hip_pred.html")
+
+@app.route("/cor_hip_pred", methods = ['POST'])
+def predict_chip():
+
+    lat_str = request.form.get('latitudechange')
+    lon_str = request.form.get('longitudechange')
+
+    if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
+        return render_template('index.html')
+    
+    try:
+        latitude = float(lat_str)
+        longitude = float(lon_str)
+    except (ValueError, TypeError):
+        return render_template('index.html')
+    
+
+    items = {"deci_lat": [latitude], "deci_lon": [longitude]}
+    df = pd.DataFrame(items)
+
+    df = df[ (df['deci_lat']< 90.) & (df['deci_lat'] > -90.)]
+    df = df[ (df['deci_lon']< 180.) & (df['deci_lon'] > -180.) ]
+
+    if not df.empty:
+        
+        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        myarray=inRas.ReadAsArray()
+
+        len_pd=np.arange(len(df))
+        lon=df["deci_lon"]
+        lat=df["deci_lat"]
+        lon=lon.values
+        lat=lat.values
+
+        row=[]
+        col=[]
+
+        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        
+        for i in len_pd:
+            row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
+            row.append(row_n)
+            col.append(col_n)
+        
+        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=mean_std.to_numpy()
+        
+        X=[]
+        for j in range(0,10):
+            print(j)
+            band=myarray[j]
+            x=[]
+            
+            for i in range(0,len(row)):
+                value= band[row[i],col[i]]
+                if value <-1000:
+                    value=np.nan
+                    x.append(value)
+                else:
+                    value = ((value - mean_std.item((j,1))) / mean_std.item((j,2))) # scale values
+                    x.append(value)
+            X.append(x)
+        
+        X.append(row)
+        X.append(col)
+        
+        X =np.array([np.array(xi) for xi in X])
+        
+        df=pd.DataFrame(X)
+        df=df.T
+        
+        df=df.dropna(axis=0, how='any')
+
+        if not df.empty:
+            input_X=df.loc[:,0:9]
+            row=df[10]
+            col=df[11]
+            
+            row_col=pd.DataFrame({"row":row,"col":col})
+            
+            input_X=input_X.values
+            
+            row=row.values
+            col=col.values
+            
+            prediction_array=np.save('predictions/chip_prediction_array.npy',input_X)
+            prediction_pandas=row_col.to_csv('predictions/chip_prediction_row_col.csv')
+            
+            input_X=np.load('predictions/chip_prediction_array.npy')
+            df=pd.DataFrame(input_X)
+            
+            new_band=myarray[1].copy()
+            new_band.shape
+            
+            new_values = cor_hip_model.predict(x=input_X,verbose=0) ###predict output value
+            new_band_values=[]
+            
+            for i in new_values:
+                new_value=i[1]
+                new_band_values.append(new_value)
+            
+            new_band_values=np.array(new_band_values)
+            resultdf = pd.DataFrame(new_band_values, columns=['predicted_result'])
+            val = resultdf['predicted_result'].values[0]   
+            val = val*100
+            vals = str(val)
+
+            result = "Likeliood of presence: " + vals + "%"
+            return render_template('chip_map.html', latitude=latitude, longitude=longitude, result=result)
+
+            
+        else: 
+            return render_template('chip_land_coord.html')
+    else:
+        return render_template('index.html')
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
     
