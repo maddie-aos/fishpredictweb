@@ -43,6 +43,25 @@ with open('saved_models/Xiphias_gladius.pkl', 'rb') as file:
     xip_gla_model = pickle.load(file)
 
 
+with open('saved_models/Coryphaena_hippurus.pkl', 'rb') as file:
+    cor_hip_model = pickle.load(file)
+
+with open('saved_models/Metacarcinus_magister.pkl', 'rb') as file:
+    met_mag_model = pickle.load(file)
+
+with open('saved_models/Pandalus_platyceros.pkl', 'rb') as file:
+    pan_pla_model = pickle.load(file)
+
+with open('saved_models/Panulirus_interruptus.pkl', 'rb') as file:
+    pan_int_model = pickle.load(file)
+
+with open('saved_models/Thunnus_albacares.pkl', 'rb') as file:
+    thu_alb_model = pickle.load(file)
+
+with open('saved_models/Trachurus_symmetricus.pkl', 'rb') as file:
+    tra_sym_model = pickle.load(file)
+
+
 #Setting the main pages
 @app.route("/")
 def index():
