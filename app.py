@@ -69,13 +69,13 @@ def predict_csor():
     lon_str = request.form.get('longitudechange')
 
     if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
-        return render_template('csor_invalid.html')
+        return render_template('index.html')
     
     try:
         latitude = float(lat_str)
         longitude = float(lon_str)
     except (ValueError, TypeError):
-        return render_template('csor_invalid.html')
+        return render_template('index.html')
 
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
     df = pd.DataFrame(items)
@@ -107,7 +107,7 @@ def predict_csor():
         mean_std=mean_std.to_numpy()
         
         X=[]
-        for j in range(0,9):
+        for j in range(0,10):
             print(j)
             band=myarray[j]
             x=[]
@@ -133,9 +133,9 @@ def predict_csor():
         df=df.dropna(axis=0, how='any')
 
         if not df.empty:
-            input_X=df.loc[:,0:8]
-            row=df[9]
-            col=df[10]
+            input_X=df.loc[:,0:9]
+            row=df[10]
+            col=df[11]
             
             row_col=pd.DataFrame({"row":row,"col":col})
             
@@ -172,7 +172,7 @@ def predict_csor():
         else: 
             return render_template('csor_land_coord.html')
     else:
-        return render_template('csor_invalid.html')
+        return render_template('index.html')
 
 @app.route("/eng_mor")
 def eng_mor_pred():
@@ -184,13 +184,13 @@ def predict_emor():
     lon_str = request.form.get('longitudechange')
 
     if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
-        return render_template('emor_invalid.html')
+        return render_template('index.html')
     
     try:
         latitude = float(lat_str)
         longitude = float(lon_str)
     except (ValueError, TypeError):
-        return render_template('csor_invalid.html')
+        return render_template('index.html')
 
 
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
@@ -223,7 +223,7 @@ def predict_emor():
         mean_std=mean_std.to_numpy()
         
         X=[]
-        for j in range(0,9):
+        for j in range(0,10):
             print(j)
             band=myarray[j]
             x=[]
@@ -245,13 +245,14 @@ def predict_emor():
         
         df=pd.DataFrame(X)
         df=df.T
+        
         df=df.dropna(axis=0, how='any')
 
         if not df.empty:
-            input_X=df.loc[:,0:8]
-            row=df[9]
-            col=df[10]
-            
+            input_X=df.loc[:,0:9]
+            row=df[10]
+            col=df[11]
+
             row_col=pd.DataFrame({"row":row,"col":col})
             
             input_X=input_X.values
@@ -290,7 +291,7 @@ def predict_emor():
         else: 
             return render_template('emor_land_coord.html')
     else:
-        return render_template('emor_invalid.html')
+        return render_template('index.html')
 
 @app.route("/par_cal")
 def par_cal_pred():
@@ -302,13 +303,13 @@ def predict_pcal():
     lon_str = request.form.get('longitudechange')
 
     if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
-        return render_template('pcal_invalid.html')
+        return render_template('index.html')
     
     try:
         latitude = float(lat_str)
         longitude = float(lon_str)
     except (ValueError, TypeError):
-        return render_template('pcal_invalid.html')
+        return render_template('index.html')
 
 
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
@@ -341,7 +342,7 @@ def predict_pcal():
         mean_std=mean_std.to_numpy()
         
         X=[]
-        for j in range(0,9):
+        for j in range(0,10):
             print(j)
             band=myarray[j]
             x=[]
@@ -367,9 +368,9 @@ def predict_pcal():
         df=df.dropna(axis=0, how='any')
 
         if not df.empty:
-            input_X=df.loc[:,0:8]
-            row=df[9]
-            col=df[10]
+            input_X=df.loc[:,0:9]
+            row=df[10]
+            col=df[11]
             
             row_col=pd.DataFrame({"row":row,"col":col})
             
@@ -407,7 +408,7 @@ def predict_pcal():
         else: 
             return render_template('pcal_land_coord.html')
     else:
-        return render_template('pcal_invalid.html')
+        return render_template('index.html')
 
 @app.route("/sco_jap")
 def sco_jap_pred():
@@ -420,13 +421,13 @@ def predict_sjap():
     lon_str = request.form.get('longitudechange')
 
     if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
-        return render_template('sjap_invalid.html')
+        return render_template('index.html')
     
     try:
         latitude = float(lat_str)
         longitude = float(lon_str)
     except (ValueError, TypeError):
-        return render_template('sjap_invalid.html')
+        return render_template('index.html')
 
 
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
@@ -459,7 +460,7 @@ def predict_sjap():
         mean_std=mean_std.to_numpy()
         
         X=[]
-        for j in range(0,9):
+        for j in range(0,10):
             print(j)
             band=myarray[j]
             x=[]
@@ -485,9 +486,9 @@ def predict_sjap():
         df=df.dropna(axis=0, how='any')
 
         if not df.empty:
-            input_X=df.loc[:,0:8]
-            row=df[9]
-            col=df[10]
+            input_X=df.loc[:,0:9]
+            row=df[10]
+            col=df[11]
             
             row_col=pd.DataFrame({"row":row,"col":col})
             
@@ -525,7 +526,7 @@ def predict_sjap():
         else: 
             return render_template('sjap_land_coord.html')
     else:
-        return render_template('sjap_invalid.html')
+        return render_template('index.html')
     
 @app.route("/thu_ala")
 def thu_ala_pred():
@@ -538,13 +539,13 @@ def predict_tala():
     lon_str = request.form.get('longitudechange')
 
     if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
-        return render_template('tala_invalid.html')
+        return render_template('index.html')
     
     try:
         latitude = float(lat_str)
         longitude = float(lon_str)
     except (ValueError, TypeError):
-        return render_template('tala_invalid.html')
+        return render_template('index.html')
 
 
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
@@ -577,7 +578,7 @@ def predict_tala():
         mean_std=mean_std.to_numpy()
         
         X=[]
-        for j in range(0,9):
+        for j in range(0,10):
             print(j)
             band=myarray[j]
             x=[]
@@ -603,9 +604,9 @@ def predict_tala():
         df=df.dropna(axis=0, how='any')
 
         if not df.empty:
-            input_X=df.loc[:,0:8]
-            row=df[9]
-            col=df[10]
+            input_X=df.loc[:,0:9]
+            row=df[10]
+            col=df[11]
             
             row_col=pd.DataFrame({"row":row,"col":col})
             
@@ -643,7 +644,7 @@ def predict_tala():
         else: 
             return render_template('tala_land_coord.html')
     else:
-        return render_template('tala_invalid.html')
+        return render_template('index.html')
     
 @app.route("/xip_gla")
 def xip_gla_pred():
@@ -656,13 +657,13 @@ def predict_xgla():
     lon_str = request.form.get('longitudechange')
 
     if lat_str is None or lon_str is None or lat_str == '' or lon_str == '':
-        return render_template('xgla_invalid.html')
+        return render_template('index.html')
     
     try:
         latitude = float(lat_str)
         longitude = float(lon_str)
     except (ValueError, TypeError):
-        return render_template('xgla_invalid.html')
+        return render_template('index.html')
     
 
     items = {"deci_lat": [latitude], "deci_lon": [longitude]}
@@ -696,7 +697,7 @@ def predict_xgla():
         mean_std=mean_std.to_numpy()
         
         X=[]
-        for j in range(0,9):
+        for j in range(0,10):
             print(j)
             band=myarray[j]
             x=[]
@@ -722,9 +723,9 @@ def predict_xgla():
         df=df.dropna(axis=0, how='any')
 
         if not df.empty:
-            input_X=df.loc[:,0:8]
-            row=df[9]
-            col=df[10]
+            input_X=df.loc[:,0:9]
+            row=df[10]
+            col=df[11]
             
             row_col=pd.DataFrame({"row":row,"col":col})
             
@@ -761,7 +762,7 @@ def predict_xgla():
         else: 
             return render_template('xgla_land_coord.html')
     else:
-        return render_template('xgla_invalid.html')
+        return render_template('index.html')
 
 
 
