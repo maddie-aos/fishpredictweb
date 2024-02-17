@@ -1381,7 +1381,7 @@ def tra_sym_pred():
     return render_template("tra_sym_pred.html")
 
 @app.route("/tra_sym_pred", methods = ['POST'])
-def predict_talb():
+def predict_tsym():
 
     lat_str = request.form.get('latitudechange')
     lon_str = request.form.get('longitudechange')
