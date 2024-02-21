@@ -1475,7 +1475,7 @@ def predict_tsym():
             
             new_values = tra_sym_model.predict(x=input_X,verbose=0) ###predict output value
             new_band_values=[]
-            
+           
             for i in new_values:
                 new_value=i[1]
                 new_band_values.append(new_value)
