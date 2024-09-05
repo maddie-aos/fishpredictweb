@@ -48,7 +48,7 @@ with open(os.path.join(BASE_DIR,'saved_models/Xiphias_gladius.pkl'), 'rb') as fi
 with open(os.path.join(BASE_DIR,'saved_models/Coryphaena_hippurus.pkl'), 'rb') as file:
     cor_hip_model = pickle.load(file)
 
-with open(os.path.join(BASE_DIR,'saved_models/Metacarcinus_magister.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Metacarcinus_magister.pkl'), 'rb') as file:
     met_mag_model = pickle.load(file)
 
 with open(os.path.join(BASE_DIR,'saved_models/Pandalus_platyceros.pkl'), 'rb') as file:
@@ -240,7 +240,7 @@ def predict_emor():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_env_mean/io_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_env_mean/io_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -953,7 +953,7 @@ def predict_mmag():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -1071,7 +1071,7 @@ def predict_ppla():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
