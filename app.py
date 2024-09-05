@@ -15,7 +15,7 @@ import folium
 import pickle
 
 # Set BASE_DIR from environment variable or default to '/opt/fishprediction/'
-BASE_DIR = os.environ.get('BASE_DIR', '/opt/fishprediction/')
+BASE_DIR = os.environ.get('BASE_DIR', '/Users/maddie/opt/fishprediction/')
 STATIC_DIR = os.path.join(BASE_DIR, 'static_files')
 
 
@@ -240,7 +240,7 @@ def predict_emor():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_env_mean/io_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -359,7 +359,7 @@ def predict_pcal():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -400,7 +400,7 @@ def predict_pcal():
             row=row.values
             col=col.values
             
-            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/pcal_prediction_array.npy',input_X))
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/pcal_prediction_array.npy'),input_X)
             prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/pcal_prediction_row_col.csv'))
             
             input_X=np.load(os.path.join(BASE_DIR,'predictions/pcal_prediction_array.npy'))
@@ -477,7 +477,7 @@ def predict_sjap():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -595,7 +595,7 @@ def predict_tala():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -714,7 +714,7 @@ def predict_xgla():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -755,7 +755,7 @@ def predict_xgla():
             row=row.values
             col=col.values
             
-            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/xgla_prediction_array.npy',input_X))
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/xgla_prediction_array.npy'),input_X)
             prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/xgla_prediction_row_col.csv'))
             
             input_X=np.load(os.path.join(BASE_DIR,'predictions/xgla_prediction_array.npy'))
@@ -834,7 +834,7 @@ def predict_chip():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -953,7 +953,7 @@ def predict_mmag():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -1071,7 +1071,7 @@ def predict_ppla():
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -1466,7 +1466,7 @@ def predict_tsym():
             row=row.values
             col=col.values
             
-            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/tsym_prediction_array.npy',input_X))
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/tsym_prediction_array.npy'),input_X)
             prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/tsym_prediction_row_col.csv'))
             
             input_X=np.load(os.path.join(BASE_DIR,'predictions/tsym_prediction_array.npy'))
