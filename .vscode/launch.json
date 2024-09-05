@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flask (Python: Flask)",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "app.py",  // Replace this with your actual Flask entry point
+                "FLASK_ENV": "development",
+                "BASE_DIR": "${workspaceFolder}"  // Set the BASE_DIR for your application
+            },
+            "args": [
+                "run",
+                "--no-debugger",
+                "--no-reload"
+            ],
+            "jinja": true,
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",  // The working directory of your app
+            "envFile": "${workspaceFolder}/.env",  // If you have environment variables defined in an .env file
+            "console": "integratedTerminal"
+        }
+    ]
+}
