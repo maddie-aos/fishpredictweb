@@ -15,7 +15,7 @@ import folium
 import pickle
 
 # Set BASE_DIR from environment variable or default to '/opt/fishprediction/'
-BASE_DIR = os.environ.get('BASE_DIR', '/Users/maddie/opt/fishprediction/')
+BASE_DIR = os.environ.get('BASE_DIR', '/opt/fishprediction/')
 STATIC_DIR = os.path.join(BASE_DIR, 'static_files')
 
 
