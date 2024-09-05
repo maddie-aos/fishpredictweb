@@ -4,101 +4,88 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dolphinfish</title>
+    <title>Prediction Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <!-- Include Leaflet CSS and JavaScript -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-    <h1 align="center">Enter Latitude and Longitude Data</h1>
-    
-    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
-        <div id="input" style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
+    <div class="ocean">
+        <div class="wave"></div>
+    </div>
+    <div class="page-container">
+        <h1>Enter Latitude and Longitude Data</h1>
+        <div class="form-container">
             <form id="corhip" action="/cor_hip_pred" method="post" class="info">
-                <!-- Update input fields with id attributes -->
                 <input type="text" id="latitudechange" name="latitudechange" placeholder="32.555">
                 <input type="text" id="longitudechange" name="longitudechange" placeholder="-118.004">
             </form>
-        </div>
-    </div> 
-        
-    <!-- Add the map container -->
-    <div id="map" style="height:800px; width:1066px;"></div>
-
-    <!-- Add a button to trigger submission -->
-    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
-        <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-            <button id="submitBtn" class="submit">Submit</button>
+            <div class="button-container">
+                <button id="submitBtn" class="submit">Submit</button>
+                <a href="{{ url_for('index') }}"><button class="submit">Back to Home</button></a>
+                <a href="{{ url_for('predict') }}"><button class="submit">Select a Different Species</button></a>
+            </div>
         </div>
     </div>
-
-    <div class="button" style="display: block; margin-bottom: 0; margin-right: 10px;">
-        <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px;">
-            <a href="{{ url_for('index') }}">
-                <button class="submit">Back to Home</button>
-            </a>
-            <a href="{{ url_for('predict') }}">
-                <button class="submit">Select a Different Species</button>
-            </a>
-        </div>
-    </div> 
-    
+    <!-- Add a container around the map -->
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
     <footer>
-        <p>&copy; 2024 Madeline Smith. All rights reserved.</p>
+        <div class="footer-content">
+            <p>&copy; 2024 Madeline Smith. All rights reserved.</p>
+        </div>
     </footer>
 
-    <!-- JavaScript for Leaflet integration -->
     <script>
         var map = L.map('map', {
             center: [0, 0],
             zoom: 2,
             crs: L.CRS.EPSG4326
         });
-
+    
         // Use your Mapbox access token and map style URL
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFkZGllLW1hb3MiLCJhIjoiY2xzbm1qYXR5MDV3ZTJocDV6aGw0MmdpOSJ9.ALa64EAmdZbIBBJ06XpfEQ', {
             attribution: '&copy; OpenStreetMap contributors',
             id: 'mapbox/satellite-v9', // Mapbox Satellite style
         }).addTo(map);
-
+    
         var customIcon = L.icon({
             iconUrl: 'static_files/mapmark.png', // Replace with the path to your custom marker image
             iconSize: [32, 32], // Adjust the size of the icon
             iconAnchor: [16, 32], // Adjust the anchor point
             popupAnchor: [0, -32] // Adjust the popup anchor
         });
-
-
+    
         var marker = L.marker([0, 0], { draggable: true, icon: customIcon }).addTo(map);
-
+    
         function updateCoordinates(latlng) {
             var latitudeString = latlng.lat.toFixed(6);
             var longitudeString = latlng.lng.toFixed(6);
-
+    
             document.getElementById('latitudechange').value = latitudeString;
             document.getElementById('longitudechange').value = longitudeString;
-
-            var latitudeNumber = parseFloat(latitudeString);
-            var longitudeNumber = parseFloat(longitudeString);
-            
-            
         }
-
-        marker.on('click', function (event) {
-            updateCoordinates(marker.getLatLng());
+    
+        // Update coordinates and move map center when dragging ends
+        marker.on('dragend', function(event) {
+            var latlng = marker.getLatLng();
+            updateCoordinates(latlng);
+            map.setView(latlng); // Move the map center to the marker's new position
         });
-
+    
         // Adding Image Overlay
-        var imageUrl = 'static_files/physical-world-map-1.jpg'; 
+        var imageUrl = 'static_files/physical-world-map-1.jpg';
         var imageBounds = [[-90, -180], [90, 180]];  // Replace with the bounds of your image
         L.imageOverlay(imageUrl, imageBounds, { crs: L.CRS.EPSG4326 }).addTo(map);
-
-
+    
         // Use a button click to trigger submission
         document.getElementById('submitBtn').addEventListener('click', function() {
             document.getElementById('corhip').submit();
         });
     </script>
+    
+        
 </body>
 </html>

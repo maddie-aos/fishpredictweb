@@ -1,61 +1,68 @@
+/* General body and layout styles */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 body {
-
-  background: linear-gradient(-45deg,#F0F3FF,#B9CADE,#81A1BC);
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
+  background: linear-gradient(to bottom, #F0F3FF, #B9CADE, #81A1BC);
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
-}
-
-body input::placeholder {
-  color: #888; /* Grayscale color */
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.page-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  position: relative; /* Position context for animations */
 }
 
 h1 {
   font-size: 2.5em;
   color: #072B54;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Form container styles */
+.form-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: center; /* Center-align the text */
+  margin-bottom: 20px; /* Space between form and map */
 }
 
-p {
-  font-size: 1.2em;
+/* Text box styles */
+form.info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+form.info input {
+  font-size: 18px;
+  padding: 10px;
+  margin: 0 10px;
+  border: 2px solid #072B54;
+  border-radius: 5px;
+  outline: none;
+  width: 150px;
+}
+
+form.info input::placeholder {
   color: #072B54;
-  text-align: center; /* Center-align the text */
 }
 
-button, .grey-button {
+/* Button styles */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; 
+  margin-bottom: 10px;/* Space between buttons */
+}
+
+button.submit {
   font-size: 18px;
   padding: 10px 20px;
-  margin: 10px;
   background-color: #072B54;
   color: #F1F1F7;
   border: none;
@@ -63,61 +70,29 @@ button, .grey-button {
   cursor: pointer;
 }
 
-.grey-button:hover {
+button.submit:hover {
   background-color: #113C6E;
 }
 
-.content-container {
+/* Map container styles */
+#map-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-}
-
-.button-container {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  flex-wrap: wrap;
+  height: 600px; /* Set height */
+  width: 800px; /* Set width */
+  margin: 20px auto; /* Center horizontally */
+  position: relative; /* Ensure map can be positioned correctly */
+  z-index: 1; /* Map should be below buttons */
 }
 
-button:hover {
-  background-color: #113C6E;
+#map {
+  height: 100%;
+  width: 100%;
+  z-index: 1; /* Ensure the map is below the buttons */
 }
 
-input {
-  font-size: 18px;
-  padding: 10px 20px;
-  margin: 10px;
-}
-
-.centered-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid #161857;
-  padding: 10px;
-  text-align: left;
-  color: black;
-}
-
-.coordinates {
-  font-size: 16px;
-  color: black;
-}
-
-footer {
-  padding: 10px;
-  font-size: 12px;
-  text-align: center;
-  font-weight: normal;
-
-}
-
+/* Footer and other content styles */
 .footer-content {
   display: flex;
   justify-content: center;
@@ -132,7 +107,7 @@ footer {
 
 ul {
   list-style: none;
-  padding: 0; /* Remove default padding for the ul */
+  padding: 0;
 }
 
 .nav-link {
@@ -159,7 +134,6 @@ ul {
   width: 100%;
 }
 
-
 .image-container {
   text-align: center;
   max-width: 100%;
@@ -173,17 +147,17 @@ ul {
 }
 
 .dedication-box {
-  max-width: 450px; 
+  max-width: 450px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
   text-align: left;
-  margin-top: 20px; /* Adjust the margin-top as needed */
+  margin-top: 20px;
 }
 
 .slideshow-container {
   position: relative;
-  max-width: 600px; /* Adjust as needed */
+  max-width: 600px;
   margin: auto;
   overflow: hidden;
 }
@@ -201,14 +175,69 @@ ul {
 
 @keyframes fade {
   from {
-      opacity: .4
+    opacity: .4;
   }
   to {
-      opacity: 1
+    opacity: 1;
   }
 }
 
-#map {
-  margin: auto;
-  display: block;
+/* Wave animation styles */
+.ocean { 
+  height: 5%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #015871;
+}
+
+.wave {
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; 
+  position: absolute;
+  top: -198px;
+  width: 6400px;
+  height: 198px;
+  animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+.wave:nth-of-type(2) {
+  top: -175px;
+  animation: wave 10s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+  opacity: 1;
+}
+
+@keyframes wave {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: -1600px;
+  }
+}
+
+@keyframes swell {
+  0%, 100% {
+    transform: translate3d(0,-25px,0);
+  }
+  50% {
+    transform: translate3d(0,5px,0);
+  }
+}
+
+/* Input Styles */
+/* Style for input textboxes */
+body input[type="text"] {
+  border: none; /* Remove border */
+  outline: none; /* Remove default outline */
+  padding: 10px; /* Adjust padding as needed */
+  font-size: 16px; /* Adjust font size as needed */
+  border-radius: 5px; /* Optional: adds rounded corners */
+  box-shadow: none; /* Remove any box shadow */
+}
+
+body input[type="text"]::placeholder {
+  color: #888; /* Grayscale color */
+  opacity: 50%; /* Placeholder opacity */
 }
