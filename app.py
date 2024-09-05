@@ -14,51 +14,53 @@ import os
 import folium
 import pickle
 
-STATIC_DIR = os.path.abspath('./static_files')
+# Set BASE_DIR from environment variable or default to '/opt/fishprediction/'
+BASE_DIR = os.environ.get('BASE_DIR', '/opt/fishprediction/')
+STATIC_DIR = os.path.join(BASE_DIR, 'static_files')
 
 
 #instantiating app 
 app = Flask(__name__, static_folder=STATIC_DIR)
 
 #getting value data for metric analysis
-eval_pres = pd.read_csv('results/DNN_performance/DNN_eval.txt', sep='\t', header=0)
+eval_pres = pd.read_csv(os.path.join(BASE_DIR,'results/DNN_performance/DNN_eval.txt'), sep='\t', header=0)
 
 
-with open('saved_models/Citharichthys_sordidus.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Citharichthys_sordidus.pkl'), 'rb') as file:
     cit_sor_model = pickle.load(file)
 
-with open('saved_models/Engraulis_mordax.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Engraulis_mordax.pkl'), 'rb') as file:
     eng_mor_model = pickle.load(file)
 
-with open('saved_models/Paralichthys_californicus.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Paralichthys_californicus.pkl'), 'rb') as file:
     par_cal_model = pickle.load(file)
 
-with open('saved_models/Scomber_japonicus.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Scomber_japonicus.pkl'), 'rb') as file:
     sco_jap_model = pickle.load(file)
 
-with open('saved_models/Thunnus_alalunga.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Thunnus_alalunga.pkl'), 'rb') as file:
     thu_ala_model = pickle.load(file)
 
-with open('saved_models/Xiphias_gladius.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Xiphias_gladius.pkl'), 'rb') as file:
     xip_gla_model = pickle.load(file)
 
 
-with open('saved_models/Coryphaena_hippurus.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Coryphaena_hippurus.pkl'), 'rb') as file:
     cor_hip_model = pickle.load(file)
 
-with open('saved_models/Metacarcinus_magister.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Metacarcinus_magister.pkl', 'rb') as file:
     met_mag_model = pickle.load(file)
 
-with open('saved_models/Pandalus_platyceros.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Pandalus_platyceros.pkl'), 'rb') as file:
     pan_pla_model = pickle.load(file)
 
-with open('saved_models/Panulirus_interruptus.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Panulirus_interruptus.pkl'), 'rb') as file:
     pan_int_model = pickle.load(file)
 
-with open('saved_models/Thunnus_albacares.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Thunnus_albacares.pkl'), 'rb') as file:
     thu_alb_model = pickle.load(file)
 
-with open('saved_models/Trachurus_symmetricus.pkl', 'rb') as file:
+with open(os.path.join(BASE_DIR,'saved_models/Trachurus_symmetricus.pkl'), 'rb') as file:
     tra_sym_model = pickle.load(file)
 
 
@@ -103,7 +105,7 @@ def predict_csor():
     df = df[ (df['deci_lon']< 180.) & (df['deci_lon'] > -180.) ]
 
     if not df.empty:
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -115,14 +117,14 @@ def predict_csor():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -163,10 +165,10 @@ def predict_csor():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/csor_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/csor_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/csor_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/csor_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/csor_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/csor_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -219,7 +221,7 @@ def predict_emor():
     df = df[ (df['deci_lon']< 180.) & (df['deci_lon'] > -180.) ]
 
     if not df.empty:
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -231,14 +233,14 @@ def predict_emor():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_env_mean/io_mean_std.txt',sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -279,10 +281,10 @@ def predict_emor():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/emor_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/emor_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/emor_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/emor_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/emor_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/emor_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -338,7 +340,7 @@ def predict_pcal():
     df = df[ (df['deci_lon']< 180.) & (df['deci_lon'] > -180.) ]
 
     if not df.empty:
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -350,14 +352,14 @@ def predict_pcal():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -398,10 +400,10 @@ def predict_pcal():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/pcal_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/pcal_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/pcal_prediction_array.npy',input_X))
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/pcal_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/pcal_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/pcal_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -456,7 +458,7 @@ def predict_sjap():
     df = df[ (df['deci_lon']< 180.) & (df['deci_lon'] > -180.) ]
 
     if not df.empty:
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -468,14 +470,14 @@ def predict_sjap():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -516,10 +518,10 @@ def predict_sjap():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/sjap_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/sjap_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/sjap_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/sjap_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/sjap_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/sjap_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -574,7 +576,7 @@ def predict_tala():
     df = df[ (df['deci_lon']< 180.) & (df['deci_lon'] > -180.) ]
 
     if not df.empty:
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -586,14 +588,14 @@ def predict_tala():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -634,10 +636,10 @@ def predict_tala():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/tala_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/tala_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/tala_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/tala_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/tala_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/tala_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -693,7 +695,7 @@ def predict_xgla():
 
     if not df.empty:
         
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -705,14 +707,14 @@ def predict_xgla():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -753,10 +755,10 @@ def predict_xgla():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/xgla_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/xgla_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/xgla_prediction_array.npy',input_X))
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/xgla_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/xgla_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/xgla_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -813,7 +815,7 @@ def predict_chip():
 
     if not df.empty:
         
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -825,14 +827,14 @@ def predict_chip():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t"))
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -873,10 +875,10 @@ def predict_chip():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/chip_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/chip_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/chip_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/chip_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/chip_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/chip_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -932,7 +934,7 @@ def predict_mmag():
 
     if not df.empty:
         
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -944,14 +946,14 @@ def predict_mmag():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -992,10 +994,10 @@ def predict_mmag():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/mmag_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/mmag_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/mmag_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/mmag_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/mmag_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/mmag_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -1050,7 +1052,7 @@ def predict_ppla():
 
     if not df.empty:
         
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -1062,14 +1064,14 @@ def predict_ppla():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt',sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -1110,10 +1112,10 @@ def predict_ppla():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/ppla_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/ppla_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/ppla_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/ppla_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/ppla_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/ppla_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -1168,7 +1170,7 @@ def predict_pint():
 
     if not df.empty:
         
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -1180,14 +1182,14 @@ def predict_pint():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -1228,10 +1230,10 @@ def predict_pint():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/pint_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/pint_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/pint_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/pint_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/pint_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/pint_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -1286,7 +1288,7 @@ def predict_talb():
 
     if not df.empty:
         
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -1298,14 +1300,14 @@ def predict_talb():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -1346,10 +1348,10 @@ def predict_talb():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/talb_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/talb_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/talb_prediction_array.npy'),input_X)
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/talb_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/talb_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/talb_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
@@ -1404,7 +1406,7 @@ def predict_tsym():
 
     if not df.empty:
         
-        inRas=gdal.Open('stacked_bio_oracle/bio_oracle_stacked.tif')
+        inRas=gdal.Open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'))
         myarray=inRas.ReadAsArray()
 
         len_pd=np.arange(len(df))
@@ -1416,14 +1418,14 @@ def predict_tsym():
         row=[]
         col=[]
 
-        src=rasterio.open('stacked_bio_oracle/bio_oracle_stacked.tif', crs= 'espg: 4326')
+        src=rasterio.open(os.path.join(BASE_DIR,'stacked_bio_oracle/bio_oracle_stacked.tif'), crs= 'espg: 4326')
         
         for i in len_pd:
             row_n, col_n = src.index(lon[i], lat[i])# spatial --> image coordinates
             row.append(row_n)
             col.append(col_n)
         
-        mean_std=pd.read_csv('env_bio_mean_std.txt',sep="\t")
+        mean_std=pd.read_csv(os.path.join(BASE_DIR,'ml_bio_mean/env_bio_mean_std.txt'),sep="\t")
         mean_std=mean_std.to_numpy()
         
         X=[]
@@ -1464,10 +1466,10 @@ def predict_tsym():
             row=row.values
             col=col.values
             
-            prediction_array=np.save('predictions/tsym_prediction_array.npy',input_X)
-            prediction_pandas=row_col.to_csv('predictions/tsym_prediction_row_col.csv')
+            prediction_array=np.save(os.path.join(BASE_DIR,'predictions/tsym_prediction_array.npy',input_X))
+            prediction_pandas=row_col.to_csv(os.path.join(BASE_DIR,'predictions/tsym_prediction_row_col.csv'))
             
-            input_X=np.load('predictions/tsym_prediction_array.npy')
+            input_X=np.load(os.path.join(BASE_DIR,'predictions/tsym_prediction_array.npy'))
             df=pd.DataFrame(input_X)
             
             new_band=myarray[1].copy()
